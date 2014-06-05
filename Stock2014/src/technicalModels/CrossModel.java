@@ -1,4 +1,4 @@
-package metricModel;
+package technicalModels;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -6,7 +6,7 @@ import java.util.LinkedList;
 
 import technical_investing_practice.DayData;
 
-public class CrossMetric {
+public class CrossModel {
 
 
 

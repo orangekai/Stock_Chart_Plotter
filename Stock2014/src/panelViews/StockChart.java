@@ -18,8 +18,8 @@ import java.util.LinkedList;
 
 import javax.swing.JPanel;
 
-import metricModel.CrossMetric;
 import parser.PriceParserCSV;
+import technicalModels.CrossModel;
 import technical_investing_practice.DayData;
 
 public class StockChart extends JPanel{
@@ -112,10 +112,7 @@ public class StockChart extends JPanel{
 		// Draw lines.
 		double xInc = (double)(w - 2*PAD)/(loDayData.get(0).getDate().getTimeInMillis()-loDayData.get(loDayData.size()-1).getDate().getTimeInMillis());
 		
-		// Draw Stock trading results.
-				g2.setPaint(Color.black);
-				renderString(g, gerDiscription(), 2*PAD, 2*PAD);
-
+		
 
 		double scale = (double)(h - 2*PAD)/(maxOnChart-minOnChart);
 		double x1;
@@ -182,7 +179,7 @@ public class StockChart extends JPanel{
 		}
 	}
 	private String gerDiscription() {
-		return CrossMetric.optimizeAll(moloDayData);
+		return CrossModel.optimizeAll(moloDayData);
 	}
 	private void renderString(Graphics g, String text, int x, int y) {
 	    for (String line : text.split("\n"))

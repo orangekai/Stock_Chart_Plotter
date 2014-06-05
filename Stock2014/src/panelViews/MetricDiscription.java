@@ -17,8 +17,8 @@ import java.util.LinkedList;
 
 import javax.swing.JPanel;
 
-import metricModel.CrossMetric;
 import parser.PriceParserCSV;
+import technicalModels.CrossModel;
 import technical_investing_practice.DayData;
 
 public class MetricDiscription extends JPanel{
@@ -76,7 +76,7 @@ public class MetricDiscription extends JPanel{
 	}
 
 	private String gerDiscription() {
-		return CrossMetric.optimizeAll(moloDayData);
+		return CrossModel.optimizeAll(moloDayData);
 	}
 	
 	private void renderString(Graphics g, String text, int x, int y) {
