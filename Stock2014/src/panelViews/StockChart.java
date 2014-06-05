@@ -7,18 +7,16 @@ import java.awt.Graphics2D;
 import java.awt.RenderingHints;
 import java.awt.font.FontRenderContext;
 import java.awt.font.LineMetrics;
-import java.awt.geom.Ellipse2D;
 import java.awt.geom.Line2D;
 import java.awt.geom.Path2D;
 import java.awt.geom.Rectangle2D;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.HashMap;
-import java.util.LinkedList;
 
 import javax.swing.JPanel;
 
-import parser.PriceParserCSV;
+import fetcher.StockCSVfetcher;
 import technicalModels.CrossModel;
 import technical_investing_practice.DayData;
 
@@ -40,10 +38,31 @@ public class StockChart extends JPanel{
 	public StockChart(String stockSymbol) {
 		super();
 		setBackground(Color.WHITE);
-		loDayData = PriceParserCSV.parse(stockSymbol);
+		
+		//TODO these are temp
+		Calendar fromDate = Calendar.getInstance(), toDate=  Calendar.getInstance();;
+
+		fromDate.set(Calendar.YEAR, 2011);
+		fromDate.set(Calendar.MONTH, 0);
+		fromDate.set(Calendar.DAY_OF_MONTH, 1);
+		fromDate.set(Calendar.HOUR_OF_DAY, 0);
+		fromDate.set(Calendar.MINUTE, 0);
+		fromDate.set(Calendar.SECOND, 0);
+		fromDate.set(Calendar.MILLISECOND, 0);		
+		toDate.set(Calendar.YEAR, 2012);
+		toDate.set(Calendar.MONTH, 11);
+		toDate.set(Calendar.DAY_OF_MONTH, 30);
+		toDate.set(Calendar.HOUR_OF_DAY, 0);
+		toDate.set(Calendar.MINUTE, 0);
+		toDate.set(Calendar.SECOND, 0);
+		toDate.set(Calendar.MILLISECOND, 0);
+		
+		loDayData = StockCSVfetcher.fetch(stockSymbol, fromDate, toDate, 'd');
 		useLogScale = false;
 		lineType = "line";
 		timeSpan = "1Y";
+		//TODO 
+		/*
 		moloDayData.put("aapl", PriceParserCSV.parse("aapl"));
 		moloDayData.put("midu", PriceParserCSV.parse("midu"));
 		moloDayData.put("vix", PriceParserCSV.parse("vix"));
@@ -56,7 +75,7 @@ public class StockChart extends JPanel{
 		moloDayData.put("gspc", PriceParserCSV.parse("gspc"));
 		moloDayData.put("midz", PriceParserCSV.parse("midz"));
 		moloDayData.put("vxx", PriceParserCSV.parse("vxx"));
-
+		*/
 
 
 	}

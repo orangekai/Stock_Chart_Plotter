@@ -1,33 +1,58 @@
-package parser;
+package fetcher;
 
 import java.io.BufferedReader;
-import java.io.FileNotFoundException;
-import java.io.FileReader;
 import java.io.IOException;
+import java.io.InputStreamReader;
+import java.net.URL;
+import java.net.URLConnection;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 import technical_investing_practice.DayData;
 
 
-public class PriceParserCSV {
 
 
-	public static ArrayList<DayData> parse (String symble) {
+public class StockCSVfetcher {
+	
+	/*
+	* Returns a Stock Object that contains info about a specified stock.
+	* @param 	symbol the company's stock symbol
+	* @return 	a stock object containing info about the company's stock
+	* @see Stock
+	*/
+	
+	public static ArrayList<DayData> fetch(String s, Calendar fromDate, Calendar toDate, char g) {  
+		String symble = s.toUpperCase();
+		int a,b,c,d,e,f;
+		a = fromDate.get(Calendar.MONTH);
+		b = fromDate.get(Calendar.DATE);
+		c = fromDate.get(Calendar.YEAR);
+		d = toDate.get(Calendar.MONTH);
+		e = toDate.get(Calendar.DATE);
+		f = toDate.get(Calendar.YEAR);
 		DayData dayData;
 		Calendar date;
 		ArrayList<DayData> loDayData = new ArrayList<DayData>();
-		String csvFile = "stockCSVs/" + symble + ".csv";
 		BufferedReader br = null;
 		String line = "";
 		String cvsSplitBy = ",";
-
 		String dateSplitBy = "-";
 
 
-		try {
+		
+		try { 
 
-			br = new BufferedReader(new FileReader(csvFile));
+			// Retrieve CSV File
+			URL yahoo = new URL("http://ichart.yahoo.com/table.csv?s=" + symble + "&a=" + a + "&b=" + b + 
+					"&c=" + c + "&d=" + d + "&e=" + e + "&f=" + f + "&g=" + g + "&ignore=.csv");
+			URLConnection connection = yahoo.openConnection(); 
+			InputStreamReader is = new InputStreamReader(connection.getInputStream());
+			br = new BufferedReader(is);  
+
+			// Parse CSV Into Array
 			while ((line = br.readLine()) != null) {
 
 				// use comma as separator
@@ -57,22 +82,13 @@ public class PriceParserCSV {
 
 				}
 			}
-
-		} catch (FileNotFoundException e) {
-			e.printStackTrace();
-		} catch (IOException e) {
-			e.printStackTrace();
-		} finally {
-			if (br != null) {
-				try {
-					br.close();
-				} catch (IOException e) {
-					e.printStackTrace();
-				}
-			}
+		} catch (IOException e1) {
+			Logger log = Logger.getLogger(StockCSVfetcher.class.getName()); 
+			log.log(Level.SEVERE, e1.toString(), e1);
+			return null;
 		}
 
 		return loDayData;
 
-	}
+	} 
 }

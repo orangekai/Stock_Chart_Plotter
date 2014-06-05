@@ -17,11 +17,10 @@ import java.util.LinkedList;
 
 import javax.swing.JPanel;
 
-import parser.PriceParserCSV;
 import technicalModels.CrossModel;
 import technical_investing_practice.DayData;
 
-public class MetricDiscription extends JPanel{
+public class ModelDiscription extends JPanel{
 
 	/**
 	 * 
@@ -34,10 +33,11 @@ public class MetricDiscription extends JPanel{
 	final int PAD = 20;
 
 
-	public MetricDiscription() {
+	public ModelDiscription() {
 		super();
 		setBackground(Color.WHITE);
 		//add stocks
+		/*
 		moloDayData.put("aapl", PriceParserCSV.parse("aapl"));
 		moloDayData.put("midu", PriceParserCSV.parse("midu"));
 		moloDayData.put("vix", PriceParserCSV.parse("vix"));
@@ -50,7 +50,7 @@ public class MetricDiscription extends JPanel{
 		moloDayData.put("gspc", PriceParserCSV.parse("gspc"));
 		moloDayData.put("midz", PriceParserCSV.parse("midz"));
 		moloDayData.put("vxx", PriceParserCSV.parse("vxx"));
-
+		*/
 
 
 	}

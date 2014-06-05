@@ -9,7 +9,7 @@ import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
 import javax.swing.JPanel;
 
-import panelViews.MetricDiscription;
+import panelViews.ModelDiscription;
 import panelViews.StockChart;
 
 
