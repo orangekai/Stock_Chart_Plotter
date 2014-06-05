@@ -42,7 +42,7 @@ public class StockChart extends JPanel{
 		//TODO these are temp
 		Calendar fromDate = Calendar.getInstance(), toDate=  Calendar.getInstance();;
 
-		fromDate.set(Calendar.YEAR, 2011);
+		fromDate.set(Calendar.YEAR, 1995);
 		fromDate.set(Calendar.MONTH, 0);
 		fromDate.set(Calendar.DAY_OF_MONTH, 1);
 		fromDate.set(Calendar.HOUR_OF_DAY, 0);
