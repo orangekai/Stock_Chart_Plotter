@@ -1,0 +1,5 @@
+package fetcher;
+
+public class StockCSVfetcher {
+
+}

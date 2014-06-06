@@ -1,0 +1,95 @@
+package fetcher;
+
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.net.URL;
+import java.net.URLConnection;
+import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+
+import technical_investing_practice.DayData;
+
+
+
+
+public class StockCSVfetcher {
+	
+	/*
+	* Returns a Stock Object that contains info about a specified stock.
+	* @param 	symbol the company's stock symbol
+	* @return 	a stock object containing info about the company's stock
+	* @see Stock
+	*/
+	
+	static String fetch(String symbol, Calendar fromDate, Calendar toDate, char g) {  
+		String sym = symbol.toUpperCase();
+		String csvString = "";
+		int a,b,c,d,e,f;
+		a = fromDate.get(Calendar.MONTH);
+		b = fromDate.get(Calendar.DATE);
+		c = fromDate.get(Calendar.YEAR);
+		d = toDate.get(Calendar.MONTH);
+		e = toDate.get(Calendar.DATE);
+		f = toDate.get(Calendar.YEAR);
+		DayData dayData;
+		Calendar date;
+		ArrayList<DayData> loDayData = new ArrayList<DayData>();
+		BufferedReader br = null;
+		String line = "";
+		String cvsSplitBy = ",";
+		String dateSplitBy = "-";
+
+
+		
+		try { 
+
+			// Retrieve CSV File
+			URL yahoo = new URL("http://ichart.yahoo.com/table.csv?s=" + symbol + "&a=" + a + "&b=" + b + 
+					"&c=" + c + "&d=" + d + "&e=" + e + "&f=" + f + "&g=" + g + "&ignore=.csv");
+			URLConnection connection = yahoo.openConnection(); 
+			InputStreamReader is = new InputStreamReader(connection.getInputStream());
+			br = new BufferedReader(is);  
+
+			// Parse CSV Into Array
+			while ((line = br.readLine()) != null) {
+
+				// use comma as separator
+				String[] stockData = line.split(cvsSplitBy);
+				if(stockData[1].matches("-?\\d+(\\.\\d+)?")){
+					dayData = new DayData();
+					date = Calendar.getInstance();
+					dayData.setOpen(Double.parseDouble(stockData[1]));
+					dayData.setHigh(Double.parseDouble(stockData[2]));
+					dayData.setLow(Double.parseDouble(stockData[3]));
+					dayData.setClose(Double.parseDouble(stockData[4]));
+					dayData.setVolume(Double.parseDouble(stockData[5]));
+					dayData.setAdjClose(Double.parseDouble(stockData[6]));
+
+					String[] dateData = stockData[0].split(dateSplitBy);
+					date.set(Calendar.YEAR, Integer.parseInt(dateData[0]));
+					date.set(Calendar.MONTH, Integer.parseInt(dateData[1])-1);
+					date.set(Calendar.DAY_OF_MONTH, Integer.parseInt(dateData[2]));
+					date.set(Calendar.HOUR_OF_DAY, 0);
+					date.set(Calendar.MINUTE, 0);
+					date.set(Calendar.SECOND, 0);
+					date.set(Calendar.MILLISECOND, 0);
+					
+					dayData.setDate(date);
+					
+					loDayData.add(0, dayData);
+
+				}
+			}
+		} catch (IOException e1) {
+			Logger log = Logger.getLogger(StockCSVfetcher.class.getName()); 
+			log.log(Level.SEVERE, e1.toString(), e1);
+			return null;
+		}
+
+		return new Stock(sym, price, volume, pe, eps, week52low, week52high, daylow, dayhigh, movingav50day, marketcap);
+
+	} 
+}

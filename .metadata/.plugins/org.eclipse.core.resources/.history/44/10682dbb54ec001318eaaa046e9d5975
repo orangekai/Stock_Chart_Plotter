@@ -1,0 +1,51 @@
+package fetcher;
+
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.net.URL;
+import java.net.URLConnection;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+
+
+
+
+public class StockCSVfetcher {
+	
+	/*
+	* Returns a Stock Object that contains info about a specified stock.
+	* @param 	symbol the company's stock symbol
+	* @return 	a stock object containing info about the company's stock
+	* @see Stock
+	*/
+	
+	static String fetch(String symbol, int a, int b, int c, int d, int e, int f, char g) {  
+		String sym = symbol.toUpperCase();
+		String csvString;
+
+		try { 
+
+			// Retrieve CSV File
+			URL yahoo = new URL("http://ichart.yahoo.com/table.csv?s=BAS.DE&a=" + a + "&b=" + b + 
+					"&c=" + c + "&d=" + d + "&e=" + e + "&f=" + f + "&g=" + g + "&ignore=.csv");
+			URLConnection connection = yahoo.openConnection(); 
+			InputStreamReader is = new InputStreamReader(connection.getInputStream());
+			BufferedReader br = new BufferedReader(is);  
+
+			// Parse CSV Into Array
+			String line = br.readLine(); 
+			String[] stockinfo = line.split(","); 
+
+			
+
+		} catch (IOException e) {
+			Logger log = Logger.getLogger(StockCSVfetcher.class.getName()); 
+			log.log(Level.SEVERE, e.toString(), e);
+			return null;
+		}
+
+		return csvString;
+
+	} 
+}
