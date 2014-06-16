@@ -101,13 +101,15 @@ public class CrossModel {
 			SMACurrentDay = SMACurrentDay + (loDayData.get(i).getAdjClose() - loDayData.get(i-n).getAdjClose())/n;
 			if(wasLowerThanSMA != (loDayData.get(i).getAdjClose() < SMACurrentDay)){
 				if(wasLowerThanSMA){
-					if(price != null)
+					if(price != null){
 						m = m*(1+(price - loDayData.get(i).getAdjClose())/price); //buy back
+					}
 					price = loDayData.get(i).getAdjClose();                       //buy
 				}//buy back and buy
 				else{
-					if(price != null)
+					if(price != null){
 						m = m*(1+(loDayData.get(i).getAdjClose() - price)/price); //sell
+					}
 					price = loDayData.get(i).getAdjClose();                       //sell short
 				}//sell and sell short
 				wasLowerThanSMA = loDayData.get(i).getAdjClose() < SMACurrentDay;
